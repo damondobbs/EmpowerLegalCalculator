@@ -107,34 +107,34 @@
 <script>
     const CONFIG = {
         PRICING: {
-            EmpowerLegal: {
-                tier1: { base: 1450, computerOver10: 105, server: 275, location: 475 },
-                tier2: { base: 2050, computerOver10: 125, server: 275, location: 475 },
-                tier3: { base: 2375, computerOver10: 150, server: 275, location: 475 }
-            },
-            EmpowerPlusLegal: {
-                tier1: { base: 2275, computerOver10: 140, server: 275, location: 475 },
-                tier2: { base: 2875, computerOver10: 170, server: 275, location: 475 },
-                tier3: { base: 3200, computerOver10: 205, server: 275, location: 475 }
-            }
-        }
-    };
+          EmpowerLegal: {
+              tier1: { base: 1450, computerOver10: 105, server: 275, location: 475 },
+              tier2: { base: 2050, computerOver10: 125, server: 275, location: 475 },
+              tier3: { base: 2375, computerOver10: 150, server: 275, location: 475 }
+          },
+          EmpowerPlusLegal: {
+              tier1: { base: 2275, computerOver10: 140, server: 275, location: 475 },
+              tier2: { base: 2875, computerOver10: 170, server: 275, location: 475 },
+              tier3: { base: 3200, computerOver10: 205, server: 275, location: 475 }
+          }
+      }
+  };
 
-    const elements = {
-        form: document.getElementById('calculatorForm'),
-        product: document.getElementById('product'),
-        region: document.getElementById('region'),
-        computers: document.getElementById('computers'),
-        servers: document.getElementById('servers'),
-        locations: document.getElementById('locations'),
-        priceBreakdown: document.getElementById('priceBreakdown'),
-        monthlyTotal: document.getElementById('monthlyTotal'),
-        themeToggle: document.getElementById('themeToggle'),
-        exportQuote: document.getElementById('exportQuote')
-    };
+  const elements = {
+      form: document.getElementById('calculatorForm'),
+      product: document.getElementById('product'),
+      region: document.getElementById('region'),
+      computers: document.getElementById('computers'),
+      servers: document.getElementById('servers'),
+      locations: document.getElementById('locations'),
+      priceBreakdown: document.getElementById('priceBreakdown'),
+      monthlyTotal: document.getElementById('monthlyTotal'),
+      themeToggle: document.getElementById('themeToggle'),
+      exportQuote: document.getElementById('exportQuote')
+  };
 
-    function calculatePrice() {
-        const product = elements.product.value;
+  function calculatePrice() {
+      const product = elements.product.value;
       const region = elements.region.value;
       const computers = Math.max(10, parseInt(elements.computers.value) || 10);
       const servers = Math.max(1, parseInt(elements.servers.value) || 1);
@@ -156,55 +156,14 @@
 
       return {
           base: basePrice,
-          computers: computersCost,
-          servers: serversCost,
-          locations: locationsCost,
+          computers: { count: computers, cost: computersCost },
+          servers: { count: servers, cost: serversCost },
+          locations: { count: locations, cost: locationsCost },
           total: total
       };
   }
 
-  function updateUI(breakdown) {
-      elements.priceBreakdown.innerHTML = `
-          <div class="grid grid-cols-2 gap-2 font-bold border-b border-gray-300 dark:border-gray-600 pb-2 mb-2">
-              <div>Item</div>
-              <div class="text-right">Amount</div>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-              <div>Base Package</div>
-              <div class="text-right">$${breakdown.base.toLocaleString()}</div>
-          </div>
-          ${breakdown.computers > 0 ? `
-              <div class="grid grid-cols-2 gap-2">
-                  <div>Additional Computers</div>
-                  <div class="text-right">$${breakdown.computers.toLocaleString()}</div>
-              </div>
-          ` : ''}
-          ${breakdown.servers > 0 ? `
-              <div class="grid grid-cols-2 gap-2">
-                  <div>Additional Servers</div>
-                  <div class="text-right">$${breakdown.servers.toLocaleString()}</div>
-              </div>
-          ` : ''}
-          ${breakdown.locations > 0 ? `
-              <div class="grid grid-cols-2 gap-2">
-                  <div>Additional Locations</div>
-                  <div class="text-right">$${breakdown.locations.toLocaleString()}</div>
-              </div>
-          ` : ''}
-      `;
-      
-      elements.monthlyTotal.textContent = breakdown.total.toLocaleString();
-  }
-
-  function handleCalculation() {
-      const breakdown = calculatePrice();
-      updateUI(breakdown);
-      return breakdown;
-  }
-
-    function updateUI(prices) {
-        const total = prices.base + prices.computers.cost + prices.servers.cost + prices.locations.cost;
-      
+  function updateUI(prices) {
       elements.priceBreakdown.innerHTML = `
           <div class="grid grid-cols-3 gap-2 font-bold border-b border-gray-300 dark:border-gray-600 pb-2 mb-2">
               <div>Item</div>
@@ -233,88 +192,84 @@
           </div>
       `;
       
-      elements.monthlyTotal.textContent = total.toLocaleString();
+      elements.monthlyTotal.textContent = prices.total.toLocaleString();
   }
 
-    function handleCalculation() {
-        const prices = calculatePrice();
-        updateUI(prices);
-        return prices;
-    }
+  function handleCalculation() {
+      const prices = calculatePrice();
+      updateUI(prices);
+      return prices;
+  }
 
-    function handleThemeToggle() {
-        document.documentElement.classList.toggle('dark');
-    }
+  function handleThemeToggle() {
+      document.documentElement.classList.toggle('dark');
+  }
 
-    function initializeApp() {
-        handleCalculation();
-        
-        elements.form.addEventListener('input', handleCalculation);
-        elements.themeToggle.addEventListener('click', handleThemeToggle);
-        elements.exportQuote.addEventListener('click', () => {
-            const prices = handleCalculation();
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF();
-            
-            // PDF Header
-            pdf.setFontSize(20);
-            pdf.text('Empower Legal Service Estimate', 20, 20);
-            
-            // Estimate Details
-            pdf.setFontSize(12);
-            pdf.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 30);
-            
-            const product = elements.product.options[elements.product.selectedIndex].text;
-            const region = elements.region.options[elements.region.selectedIndex].text;
-            
-            pdf.text(`Product: ${product}`, 20, 40);
-            pdf.text(`Region: ${region}`, 20, 50);
-            
-            // Price Breakdown Table
-            pdf.text('Price Breakdown:', 20, 70);
-            
-            let y = 80;
-            pdf.text('Item', 20, y);
-            pdf.text('Count', 100, y);
-            pdf.text('Amount', 150, y);
-            
-            y += 10;
-            pdf.line(20, y, 190, y);
-            
-            y += 10;
-            pdf.text('Base Price', 20, y);
-            pdf.text('-', 100, y);
-            pdf.text(`$${prices.base.toLocaleString()}`, 150, y);
-            
-            y += 10;
-            pdf.text('Computers', 20, y);
-            pdf.text(prices.computers.count.toString(), 100, y);
-            pdf.text(`$${prices.computers.cost.toLocaleString()}`, 150, y);
-            
-            y += 10;
-            pdf.text('Servers', 20, y);
-            pdf.text(prices.servers.count.toString(), 100, y);
-            pdf.text(`$${prices.servers.cost.toLocaleString()}`, 150, y);
-            
-            y += 10;
-            pdf.text('Locations', 20, y);
-            pdf.text(prices.locations.count.toString(), 100, y);
-            pdf.text(`$${prices.locations.cost.toLocaleString()}`, 150, y);
-            
-            y += 10;
-            pdf.line(20, y, 190, y);
-            
-            y += 10;
-            const total = prices.base + prices.computers.cost + prices.servers.cost + prices.locations.cost;
-            pdf.setFont(undefined, 'bold');
-            pdf.text('Total Monthly Cost:', 20, y);
-            pdf.text(`$${total.toLocaleString()}`, 150, y);
-            
-            // Save the PDF
-            pdf.save('empower-legal-estimate.pdf');
-        });
-    }
+  function initializeApp() {
+      handleCalculation();
+      
+      elements.form.addEventListener('input', handleCalculation);
+      elements.themeToggle.addEventListener('click', handleThemeToggle);
+      elements.exportQuote.addEventListener('click', () => {
+          const prices = handleCalculation();
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF();
+          
+          // PDF Header
+          pdf.setFontSize(20);
+          pdf.text('Empower Legal Service Estimate', 20, 20);
+          
+          // Estimate Details
+          pdf.setFontSize(12);
+          pdf.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 30);
+          
+          const product = elements.product.options[elements.product.selectedIndex].text;
+          const region = elements.region.options[elements.region.selectedIndex].text;
+          
+          pdf.text(`Product: ${product}`, 20, 40);
+          pdf.text(`Region: ${region}`, 20, 50);
+          
+          // Price Breakdown Table
+          pdf.text('Price Breakdown:', 20, 70);
+          
+          let y = 80;
+          pdf.text('Item', 20, y);
+          pdf.text('Count', 100, y);
+          pdf.text('Amount', 150, y);
+          
+          y += 10;
+          pdf.line(20, y, 190, y);
+          
+          y += 10;
+          pdf.text('Base Price', 20, y);
+          pdf.text('-', 100, y);
+          pdf.text(`$${prices.base.toLocaleString()}`, 150, y);
+          
+          y += 10;
+          pdf.text('Computers', 20, y);
+          pdf.text(prices.computers.count.toString(), 100, y);
+          pdf.text(prices.computers.cost === 0 ? 'Included' : `$${prices.computers.cost.toLocaleString()}`, 150, y);
+          
+          y += 10;
+          pdf.text('Servers', 20, y);
+          pdf.text(prices.servers.count.toString(), 100, y);
+          pdf.text(prices.servers.cost === 0 ? 'Included' : `$${prices.servers.cost.toLocaleString()}`, 150, y);
+          
+          y += 10;
+          pdf.text('Locations', 20, y);
+          pdf.text(prices.locations.count.toString(), 100, y);
+          pdf.text(prices.locations.cost === 0 ? 'Included' : `$${prices.locations.cost.toLocaleString()}`, 150, y);
+          
+          y += 20;
+          pdf.setFontSize(14);
+          pdf.text(`Total Monthly Cost: $${prices.total.toLocaleString()}`, 20, y);
+          
+          pdf.save('Empower_Legal_Estimate.pdf');
+      });
+  }
 
+  initializeApp();
+   
     // Initialize the application when the DOM is ready
     document.addEventListener('DOMContentLoaded', initializeApp);
 
