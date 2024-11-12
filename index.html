@@ -135,40 +135,72 @@
 
     function calculatePrice() {
         const product = elements.product.value;
-        const region = elements.region.value;
-        const pricing = CONFIG.PRICING[product][region];
-        
-        // Get input values
-        const computers = Math.max(10, parseInt(elements.computers.value) || 10);
-        const servers = Math.max(1, parseInt(elements.servers.value) || 1);
-        const locations = Math.max(1, parseInt(elements.locations.value) || 1);
+      const region = elements.region.value;
+      const computers = Math.max(10, parseInt(elements.computers.value) || 10);
+      const servers = Math.max(1, parseInt(elements.servers.value) || 1);
+      const locations = Math.max(1, parseInt(elements.locations.value) || 1);
 
-        // Calculate computer costs
-        const extraComputers = Math.max(0, computers - 10);
-        const computerCost = extraComputers * pricing.computerOver10;
+      const pricing = CONFIG.PRICING[product][region];
+      const basePrice = pricing.base;
+      const computerRate = pricing.computerOver10;
 
-        // Calculate server and location costs
-        const extraServers = Math.max(0, servers - 1);
-        const extraLocations = Math.max(0, locations - 1);
-        const serverCost = extraServers * pricing.server;
-        const locationCost = extraLocations * pricing.location;
+      const additionalComputers = Math.max(0, computers - 10);
+      const additionalServers = Math.max(0, servers - 1);
+      const additionalLocations = Math.max(0, locations - 1);
 
-        return {
-            base: pricing.base,
-            computers: {
-                count: computers,
-                cost: computerCost
-            },
-            servers: {
-                count: servers,
-                cost: serverCost
-            },
-            locations: {
-                count: locations,
-                cost: locationCost
-            }
-        };
-    }
+      const computersCost = additionalComputers * computerRate;
+      const serversCost = additionalServers * pricing.server;
+      const locationsCost = additionalLocations * pricing.location;
+
+      const total = basePrice + computersCost + serversCost + locationsCost;
+
+      return {
+          base: basePrice,
+          computers: computersCost,
+          servers: serversCost,
+          locations: locationsCost,
+          total: total
+      };
+  }
+
+  function updateUI(breakdown) {
+      elements.priceBreakdown.innerHTML = `
+          <div class="grid grid-cols-2 gap-2 font-bold border-b border-gray-300 dark:border-gray-600 pb-2 mb-2">
+              <div>Item</div>
+              <div class="text-right">Amount</div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+              <div>Base Package</div>
+              <div class="text-right">$${breakdown.base.toLocaleString()}</div>
+          </div>
+          ${breakdown.computers > 0 ? `
+              <div class="grid grid-cols-2 gap-2">
+                  <div>Additional Computers</div>
+                  <div class="text-right">$${breakdown.computers.toLocaleString()}</div>
+              </div>
+          ` : ''}
+          ${breakdown.servers > 0 ? `
+              <div class="grid grid-cols-2 gap-2">
+                  <div>Additional Servers</div>
+                  <div class="text-right">$${breakdown.servers.toLocaleString()}</div>
+              </div>
+          ` : ''}
+          ${breakdown.locations > 0 ? `
+              <div class="grid grid-cols-2 gap-2">
+                  <div>Additional Locations</div>
+                  <div class="text-right">$${breakdown.locations.toLocaleString()}</div>
+              </div>
+          ` : ''}
+      `;
+      
+      elements.monthlyTotal.textContent = breakdown.total.toLocaleString();
+  }
+
+  function handleCalculation() {
+      const breakdown = calculatePrice();
+      updateUI(breakdown);
+      return breakdown;
+  }
 
     function updateUI(prices) {
         const total = prices.base + prices.computers.cost + prices.servers.cost + prices.locations.cost;
