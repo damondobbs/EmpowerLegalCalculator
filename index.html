@@ -172,40 +172,37 @@
 
     function updateUI(prices) {
         const total = prices.base + prices.computers.cost + prices.servers.cost + prices.locations.cost;
-          
-          elements.priceBreakdown.innerHTML = `
-              <div class="grid grid-cols-3 gap-2 font-bold border-b border-gray-300 dark:border-gray-600 pb-2 mb-2">
-                  <div>Item</div>
-                  <div class="text-right">Count</div>
-                  <div class="text-right">Amount</div>
-              </div>
-              <div class="grid grid-cols-3 gap-2">
-                  <div>Base Price</div>
-                  <div class="text-right">-</div>
-                  <div class="text-right">$${prices.base.toLocaleString()}</div>
-              </div>
-              <div class="grid grid-cols-3 gap-2">
-                  <div>Computers</div>
-                  <div class="text-right">${prices.computers.count}</div>
-                  <div class="text-right">${prices.computers.cost === 0 ? 'Included' : '$' + prices.computers.cost.toLocaleString()}</div>
-              </div>
-              <div class="grid grid-cols-3 gap-2">
-                  <div>Servers</div>
-                  <div class="text-right">${prices.servers.count}</div>
-                  <div class="text-right">${prices.servers.cost === 0 ? 'Included' : '$' + prices.servers.cost.toLocaleString()}</div>
-              </div>
-              <div class="grid grid-cols-3 gap-2">
-                  <div>Locations</div>
-                  <div class="text-right">${prices.locations.count}</div>
-                  <div class="text-right">${prices.locations.cost === 0 ? 'Included' : '$' + prices.locations.cost.toLocaleString()}</div>
-              </div>
-          `;
-          
-          elements.monthlyTotal.textContent = total.toLocaleString();
-      }
-        
-        elements.monthlyTotal.textContent = total.toLocaleString();
-    }
+      
+      elements.priceBreakdown.innerHTML = `
+          <div class="grid grid-cols-3 gap-2 font-bold border-b border-gray-300 dark:border-gray-600 pb-2 mb-2">
+              <div>Item</div>
+              <div class="text-right">Count</div>
+              <div class="text-right">Amount</div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+              <div>Base Price</div>
+              <div class="text-right">-</div>
+              <div class="text-right">$${prices.base.toLocaleString()}</div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+              <div>Computers</div>
+              <div class="text-right">${prices.computers.count}</div>
+              <div class="text-right">${prices.computers.cost === 0 ? 'Included' : '$' + prices.computers.cost.toLocaleString()}</div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+              <div>Servers</div>
+              <div class="text-right">${prices.servers.count}</div>
+              <div class="text-right">${prices.servers.cost === 0 ? 'Included' : '$' + prices.servers.cost.toLocaleString()}</div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+              <div>Locations</div>
+              <div class="text-right">${prices.locations.count}</div>
+              <div class="text-right">${prices.locations.cost === 0 ? 'Included' : '$' + prices.locations.cost.toLocaleString()}</div>
+          </div>
+      `;
+      
+      elements.monthlyTotal.textContent = total.toLocaleString();
+  }
 
     function handleCalculation() {
         const prices = calculatePrice();
