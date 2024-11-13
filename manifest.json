@@ -1,0 +1,49 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.11",
+  "version": "1.0.0",
+  "id": "3c39d405-5c7e-4947-ac06-f22815d3bc59",
+  "packageName": "com.ddobbs.empowerlegalcalculator",
+  "developer": {
+    "name": "DDobbs",
+    "websiteUrl": "https://damondobbs.github.io/EmpowerLegalCalculator/",
+    "privacyUrl": "https://damondobbs.github.io/EmpowerLegalCalculator/",
+    "termsOfUseUrl": "https://damondobbs.github.io/EmpowerLegalCalculator/"
+  },
+  "name": {
+    "short": "Empower Legal Calculator",
+    "full": "Empower Legal Calculator"
+  },
+  "description": {
+    "short": "Empower Legal Calculator",
+    "full": "Get a quick estimate for Empower Legal or Empower+ Legal"
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png"
+  },
+  "accentColor": "#0078D4",
+  "staticTabs": [
+    {
+      "entityId": "calculator",
+      "name": "Calculator",
+      "contentUrl": "https://damondobbs.github.io/EmpowerLegalCalculator/",
+      "websiteUrl": "https://damondobbs.github.io/EmpowerLegalCalculator/",
+      "scopes": ["personal", "team", "groupchat"]
+    }
+  ],
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://damondobbs.github.io/EmpowerLegalCalculator/",
+      "canUpdateConfiguration": true,
+      "scopes": ["team", "groupchat"]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "damondobbs.github.io"
+  ]
+}
