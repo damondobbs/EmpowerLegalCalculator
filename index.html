@@ -307,11 +307,16 @@
               
               // Footer
               y += 30;
+              pdf.setFontSize(15);
+              pdf.setFont(undefined, 'bold');
+              pdf.setTextDecoration('underline');
+              pdf.text('Notes:', 20, y);
+              y += 10;
               pdf.setFontSize(10);
               pdf.setFont(undefined, 'normal');
-              pdf.text('Base Price includes up to 10 computers, 1 server, and 1 location.', 20, y);
-              y += 10;
-              pdf.text('This is an estimate, not a quote. Prices are subject to change without notice.', 20, y);
+              pdf.text(' - Base Price includes up to 10 computers, 1 server, and 1 location.', 20, y);
+              y += 5;
+              pdf.text(' - This is an estimate, not a quote. Prices are subject to change without notice.', 20, y);
               y += 10;
               
               // Save the PDF
