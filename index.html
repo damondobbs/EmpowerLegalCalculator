@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Empower Legal Calculator</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
     tailwind.config = {
@@ -33,23 +32,27 @@
             min-width: 44px;
         }
     }
+    .transition-all {
+        transition: all 0.3s ease;
+    }
 </style>
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex items-center justify-center relative overflow-x-hidden">
-<div class="fixed inset-0 bg-gradient-to-br from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-900 opacity-80"></div>
-<div class="fixed inset-0 backdrop-blur-sm"></div>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex items-center justify-center relative overflow-x-hidden transition-all">
+<div class="fixed inset-0 bg-gradient-to-br from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-900 opacity-80 transition-all"></div>
+<div class="fixed inset-0 backdrop-blur-sm transition-all"></div>
 <div class="fixed w-full md:w-96 h-96 filter blur-3xl opacity-10 dark:opacity-5">
     <div class="absolute top-0 left-0 w-32 h-32 md:w-48 md:h-48 bg-primary rounded-full mix-blend-multiply blob"></div>
     <div class="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 bg-gray-400 dark:bg-gray-600 rounded-full mix-blend-multiply blob delay-2"></div>
     <div class="absolute bottom-0 left-0 w-32 h-32 md:w-48 md:h-48 bg-gray-300 dark:bg-gray-700 rounded-full mix-blend-multiply blob delay-4"></div>
 </div>
 
-<div class="calculator-container max-w-6xl w-full mx-4 md:mx-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-lg p-4 md:p-6 shadow-lg z-10 my-8 md:my-0">
+<div class="calculator-container max-w-6xl w-full mx-4 md:mx-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-lg p-4 md:p-6 shadow-lg z-10 my-8 md:my-0 transition-all">
+    <!-- Header section -->
     <header class="flex flex-col md:flex-row items-center justify-between mb-6 space-y-4 md:space-y-0">
         <h1 class="text-xl md:text-2xl font-bold">Empower Legal Calculator</h1>
         <div class="flex items-center space-x-4">
-            <button id="themeToggle" class="p-3 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" aria-label="Toggle theme">
+            <button id="themeToggle" class="p-3 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all" aria-label="Toggle theme">
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
@@ -60,19 +63,20 @@
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <!-- Form section -->
         <form id="calculatorForm" class="space-y-6">
             <h2 class="text-lg md:text-xl font-bold mb-4">Configure Your Service</h2>
             <div class="space-y-4 md:space-y-6">
                 <div class="form-group">
                     <label for="product" class="block text-sm font-medium mb-2">Product</label>
-                    <select id="product" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                    <select id="product" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-all hover:bg-gray-200 dark:hover:bg-gray-600">
                         <option value="EmpowerLegal">Empower Legal</option>
                         <option value="EmpowerPlusLegal">Empower+ Legal</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="region" class="block text-sm font-medium mb-2">Location</label>
-                    <select id="region" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                    <select id="region" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-all hover:bg-gray-200 dark:hover:bg-gray-600">
                         <option value="tier1">Market 1 (UP, Hibbing, etc.)</option>
                         <option value="tier2">Market 2 (DEN, DAL, etc.)</option>
                         <option value="tier3">Market 3 (NJ, DC, ATL)</option>
@@ -80,24 +84,25 @@
                 </div>
                 <div class="form-group">
                     <label for="computers" class="block text-sm font-medium mb-2">Number of Computers</label>
-                    <input type="number" id="computers" min="10" value="10" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                    <input type="number" id="computers" min="10" value="10" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-all hover:bg-gray-200 dark:hover:bg-gray-600">
                 </div>
                 <div class="form-group">
                     <label for="servers" class="block text-sm font-medium mb-2">Number of Servers</label>
-                    <input type="number" id="servers" min="1" value="1" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                    <input type="number" id="servers" min="1" value="1" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-all hover:bg-gray-200 dark:hover:bg-gray-600">
                 </div>
                 <div class="form-group">
                     <label for="locations" class="block text-sm font-medium mb-2">Number of Locations</label>
-                    <input type="number" id="locations" min="1" value="1" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                    <input type="number" id="locations" min="1" value="1" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-all hover:bg-gray-200 dark:hover:bg-gray-600">
                 </div>
             </div>
         </form>
 
-        <div class="bg-gray-100 dark:bg-gray-700 p-4 md:p-6 rounded-lg">
+        <!-- Summary section -->
+        <div class="bg-gray-100 dark:bg-gray-700/50 p-4 md:p-6 rounded-lg">
             <h2 class="text-lg md:text-xl font-bold mb-4">Your Service Summary</h2>
             <div id="priceBreakdown" class="space-y-3 text-sm mb-6"></div>
             <div class="text-xl md:text-2xl font-bold mb-6">Monthly Total: $<span id="monthlyTotal">0</span></div>
-            <button id="exportQuote" class="bg-primary text-white px-4 py-3 rounded-md w-full hover:bg-red-700 active:bg-red-800 transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none">
+            <button id="exportQuote" class="bg-primary text-white px-4 py-3 rounded-md w-full hover:bg-red-700 active:bg-red-800 transition-all focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed">
                 Export Estimate
             </button>
         </div>
@@ -107,179 +112,288 @@
 <script>
     const CONFIG = {
         PRICING: {
-          EmpowerLegal: {
-              tier1: { base: 1450, computerOver10: 105, server: 275, location: 475 },
-              tier2: { base: 2050, computerOver10: 125, server: 275, location: 475 },
-              tier3: { base: 2375, computerOver10: 150, server: 275, location: 475 }
-          },
-          EmpowerPlusLegal: {
-              tier1: { base: 2275, computerOver10: 140, server: 275, location: 475 },
-              tier2: { base: 2875, computerOver10: 170, server: 275, location: 475 },
-              tier3: { base: 3200, computerOver10: 205, server: 275, location: 475 }
+            EmpowerLegal: {
+                tier1: { base: 1450, computerOver10: 105, server: 275, location: 475 },
+                tier2: { base: 2050, computerOver10: 125, server: 275, location: 475 },
+                tier3: { base: 2375, computerOver10: 150, server: 275, location: 475 }
+            },
+            EmpowerPlusLegal: {
+                tier1: { base: 2275, computerOver10: 140, server: 275, location: 475 },
+                tier2: { base: 2875, computerOver10: 170, server: 275, location: 475 },
+                tier3: { base: 3200, computerOver10: 205, server: 275, location: 475 }
+            }
+        }
+    };
+
+    // Cache DOM elements
+    const elements = {
+        form: document.getElementById('calculatorForm'),
+        product: document.getElementById('product'),
+        region: document.getElementById('region'),
+        computers: document.getElementById('computers'),
+        servers: document.getElementById('servers'),
+        locations: document.getElementById('locations'),
+        priceBreakdown: document.getElementById('priceBreakdown'),
+        monthlyTotal: document.getElementById('monthlyTotal'),
+        themeToggle: document.getElementById('themeToggle'),
+        exportQuote: document.getElementById('exportQuote')
+    };
+
+    // Debounce function to limit calculation frequency
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Calculate prices based on input values
+    function calculatePrice() {
+        const product = elements.product.value;
+        const region = elements.region.value;
+        const computers = Math.max(10, parseInt(elements.computers.value) || 10);
+        const servers = Math.max(1, parseInt(elements.servers.value) || 1);
+        const locations = Math.max(1, parseInt(elements.locations.value) || 1);
+
+        const pricing = CONFIG.PRICING[product][region];
+        const basePrice = pricing.base;
+        const computerRate = pricing.computerOver10;
+
+        const additionalComputers = Math.max(0, computers - 10);
+        const additionalServers = Math.max(0, servers - 1);
+        const additionalLocations = Math.max(0, locations - 1);
+
+        const computersCost = additionalComputers * computerRate;
+        const serversCost = additionalServers * pricing.server;
+        const locationsCost = additionalLocations * pricing.location;
+
+        const total = basePrice + computersCost + serversCost + locationsCost;
+
+        return {
+            base: basePrice,
+            computers: { count: computers, cost: computersCost },
+            servers: { count: servers, cost: serversCost },
+            locations: { count: locations, cost: locationsCost },
+            total: total
+        };
+    }
+
+    // Update UI with calculated prices
+    function updateUI(prices) {
+        elements.priceBreakdown.innerHTML = `
+            <div class="space-y-2">
+                <div class="grid grid-cols-2 gap-2 font-bold border-b border-gray-300 dark:border-gray-600 pb-2 mb-2">
+                    <div>Item</div>
+                    <div class="text-right">Amount</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all p-1 rounded">
+                    <div>Base Package</div>
+                    <div class="text-right">$${prices.base.toLocaleString()}</div>
+                </div>
+                ${prices.computers.cost > 0 ? `
+                    <div class="grid grid-cols-2 gap-2 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all p-1 rounded">
+                        <div>Additional Computers</div>
+                        <div class="text-right">$${prices.computers.cost.toLocaleString()}</div>
+                    </div>
+                ` : ''}
+                ${prices.servers.cost > 0 ? `
+                    <div class="grid grid-cols-2 gap-2 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all p-1 rounded">
+                        <div>Additional Servers</div>
+                        <div class="text-right">$${prices.servers.cost.toLocaleString()}</div>
+                    </div>
+                ` : ''}
+                ${prices.locations.cost > 0 ? `
+                    <div class="grid grid-cols-2 gap-2 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all p-1 rounded">
+                        <div>Additional Locations</div>
+                        <div class="text-right">$${prices.locations.cost.toLocaleString()}</div>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        
+        elements.monthlyTotal.textContent = prices.total.toLocaleString();
+    }
+
+    // Handle calculation with debounce
+    const handleCalculation = debounce(() => {
+        const prices = calculatePrice();
+        updateUI(prices);
+        return prices;
+    }, 300);
+
+    // Handle theme toggle
+    function handleThemeToggle() {
+        document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    // Generate PDF
+    async function generatePDF(prices) {
+          try {
+              elements.exportQuote.disabled = true;
+              elements.exportQuote.textContent = 'Generating PDF...';
+
+              const { jsPDF } = window.jspdf;
+              const pdf = new jsPDF();
+              
+              // PDF Header
+              pdf.setFontSize(20);
+              pdf.text('Empower Legal Service Estimate', 20, 20);
+              
+              // Estimate Details
+              pdf.setFontSize(12);
+              pdf.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 30);
+              
+              const product = elements.product.options[elements.product.selectedIndex].text;
+              const region = elements.region.options[elements.region.selectedIndex].text;
+              
+              pdf.text(`Product: ${product}`, 20, 40);
+              pdf.text(`Region: ${region}`, 20, 50);
+              
+              // Price Breakdown
+              let y = 70;
+              pdf.text('Price Breakdown:', 20, y);
+              
+              y += 10;
+              // Header
+              pdf.setFontSize(11);
+              pdf.text('Item', 20, y);
+              pdf.text('Count', 100, y);
+              pdf.text('Amount', 150, y);
+              
+              y += 5;
+              pdf.line(20, y, 190, y);
+              
+              y += 10;
+              // Base Price
+              pdf.text('Base Package', 20, y);
+              pdf.text('-', 100, y);
+              pdf.text(`$${prices.base.toLocaleString()}`, 150, y);
+              
+              if (prices.computers.cost > 0) {
+                  y += 10;
+                  pdf.text('Additional Computers', 20, y);
+                  pdf.text(prices.computers.count.toString(), 100, y);
+                  pdf.text(`$${prices.computers.cost.toLocaleString()}`, 150, y);
+              }
+              
+              if (prices.servers.cost > 0) {
+                  y += 10;
+                  pdf.text('Additional Servers', 20, y);
+                  pdf.text(prices.servers.count.toString(), 100, y);
+                  pdf.text(`$${prices.servers.cost.toLocaleString()}`, 150, y);
+              }
+              
+              if (prices.locations.cost > 0) {
+                  y += 10;
+                  pdf.text('Additional Locations', 20, y);
+                  pdf.text(prices.locations.count.toString(), 100, y);
+                  pdf.text(`$${prices.locations.cost.toLocaleString()}`, 150, y);
+              }
+              
+              y += 15;
+              pdf.line(20, y, 190, y);
+              
+              y += 10;
+              pdf.setFontSize(12);
+              pdf.setFont(undefined, 'bold');
+              pdf.text('Monthly Total:', 20, y);
+              pdf.text(`$${prices.total.toLocaleString()}`, 150, y);
+              
+              // Footer
+              y += 30;
+              pdf.setFontSize(10);
+              pdf.setFont(undefined, 'normal');
+              pdf.text('This is an estimate, not a quote. Prices are subject to change without notice.', 20, y);
+              y += 10;
+              
+              // Save the PDF
+              pdf.save('Empower-Legal-Estimate.pdf');
+          } catch (error) {
+              console.error('Error generating PDF:', error);
+              alert('There was an error generating the PDF. Please try again.');
+          } finally {
+              elements.exportQuote.disabled = false;
+              elements.exportQuote.textContent = 'Export Estimate';
           }
       }
-  };
 
-  const elements = {
-      form: document.getElementById('calculatorForm'),
-      product: document.getElementById('product'),
-      region: document.getElementById('region'),
-      computers: document.getElementById('computers'),
-      servers: document.getElementById('servers'),
-      locations: document.getElementById('locations'),
-      priceBreakdown: document.getElementById('priceBreakdown'),
-      monthlyTotal: document.getElementById('monthlyTotal'),
-      themeToggle: document.getElementById('themeToggle'),
-      exportQuote: document.getElementById('exportQuote')
-  };
+      // Initialize the application
+      function initializeApp() {
+          // Set initial theme based on localStorage or default to light
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme === 'dark') {
+              document.documentElement.classList.add('dark');
+          }
 
-  function calculatePrice() {
-      const product = elements.product.value;
-      const region = elements.region.value;
-      const computers = Math.max(10, parseInt(elements.computers.value) || 10);
-      const servers = Math.max(1, parseInt(elements.servers.value) || 1);
-      const locations = Math.max(1, parseInt(elements.locations.value) || 1);
+          // Initial calculation
+          handleCalculation();
+          
+          // Event Listeners
+          elements.form.addEventListener('input', (event) => {
+              if (['product', 'region', 'computers', 'servers', 'locations'].includes(event.target.id)) {
+                  handleCalculation();
+              }
+          });
 
-      const pricing = CONFIG.PRICING[product][region];
-      const basePrice = pricing.base;
-      const computerRate = pricing.computerOver10;
+          elements.themeToggle.addEventListener('click', handleThemeToggle);
+          
+          // Lazy load jsPDF when export button is clicked
+          elements.exportQuote.addEventListener('click', async () => {
+              if (!window.jspdf) {
+                  try {
+                      elements.exportQuote.disabled = true;
+                      elements.exportQuote.textContent = 'Loading PDF generator...';
+                      await loadJsPDF();
+                  } catch (error) {
+                      console.error('Error loading jsPDF:', error);
+                      alert('Unable to load PDF generator. Please try again.');
+                      return;
+                  } finally {
+                      elements.exportQuote.disabled = false;
+                      elements.exportQuote.textContent = 'Export Estimate';
+                  }
+              }
+              const prices = calculatePrice();
+              generatePDF(prices);
+          });
 
-      const additionalComputers = Math.max(0, computers - 10);
-      const additionalServers = Math.max(0, servers - 1);
-      const additionalLocations = Math.max(0, locations - 1);
+          // Add input validation
+          elements.computers.addEventListener('input', validatePositiveInteger);
+          elements.servers.addEventListener('input', validatePositiveInteger);
+          elements.locations.addEventListener('input', validatePositiveInteger);
+      }
 
-      const computersCost = additionalComputers * computerRate;
-      const serversCost = additionalServers * pricing.server;
-      const locationsCost = additionalLocations * pricing.location;
+      // Function to load jsPDF dynamically
+      async function loadJsPDF() {
+          return new Promise((resolve, reject) => {
+              const script = document.createElement('script');
+              script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+              script.onload = resolve;
+              script.onerror = reject;
+              document.head.appendChild(script);
+          });
+      }
 
-      const total = basePrice + computersCost + serversCost + locationsCost;
+      // Input validation for positive integers
+      function validatePositiveInteger(event) {
+          const input = event.target;
+          const value = input.value;
+          if (value !== '' && (!Number.isInteger(Number(value)) || Number(value) < 1)) {
+              input.setCustomValidity('Please enter a positive integer');
+          } else {
+              input.setCustomValidity('');
+          }
+          input.reportValidity();
+      }
 
-      return {
-          base: basePrice,
-          computers: { count: computers, cost: computersCost },
-          servers: { count: servers, cost: serversCost },
-          locations: { count: locations, cost: locationsCost },
-          total: total
-      };
-  }
-
-  function updateUI(prices) {
-      elements.priceBreakdown.innerHTML = `
-          <div class="space-y-2">
-              <div class="grid grid-cols-2 gap-2 font-bold border-b border-gray-300 dark:border-gray-600 pb-2 mb-2">
-                  <div>Item</div>
-                  <div class="text-right">Amount</div>
-              </div>
-              <div class="grid grid-cols-2 gap-2">
-                  <div>Base Package</div>
-                  <div class="text-right">$${prices.base.toLocaleString()}</div>
-              </div>
-              ${prices.computers.cost > 0 ? `
-                  <div class="grid grid-cols-2 gap-2">
-                      <div>Additional Computers</div>
-                      <div class="text-right">$${prices.computers.cost.toLocaleString()}</div>
-                  </div>
-              ` : ''}
-              ${prices.servers.cost > 0 ? `
-                  <div class="grid grid-cols-2 gap-2">
-                      <div>Additional Servers</div>
-                      <div class="text-right">$${prices.servers.cost.toLocaleString()}</div>
-                  </div>
-              ` : ''}
-              ${prices.locations.cost > 0 ? `
-                  <div class="grid grid-cols-2 gap-2">
-                      <div>Additional Locations</div>
-                      <div class="text-right">$${prices.locations.cost.toLocaleString()}</div>
-                  </div>
-              ` : ''}
-          </div>
-      `;
-      
-      elements.monthlyTotal.textContent = prices.total.toLocaleString();
-  }
-
-  function handleCalculation() {
-      const prices = calculatePrice();
-      updateUI(prices);
-      return prices;
-  }
-
-  function handleThemeToggle() {
-      document.documentElement.classList.toggle('dark');
-  }
-
-  function initializeApp() {
-      handleCalculation();
-      
-      elements.form.addEventListener('input', handleCalculation);
-      elements.themeToggle.addEventListener('click', handleThemeToggle);
-      elements.exportQuote.addEventListener('click', () => {
-          const prices = handleCalculation();
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF();
-          
-          // PDF Header
-          pdf.setFontSize(20);
-          pdf.text('Empower Legal Service Estimate', 20, 20);
-          
-          // Estimate Details
-          pdf.setFontSize(12);
-          pdf.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 30);
-          
-          const product = elements.product.options[elements.product.selectedIndex].text;
-          const region = elements.region.options[elements.region.selectedIndex].text;
-          
-          pdf.text(`Product: ${product}`, 20, 40);
-          pdf.text(`Region: ${region}`, 20, 50);
-          
-          // Price Breakdown Table
-          pdf.text('Price Breakdown:', 20, 70);
-          
-          let y = 80;
-          pdf.text('Item', 20, y);
-          pdf.text('Count', 100, y);
-          pdf.text('Amount', 150, y);
-          
-          y += 10;
-          pdf.line(20, y, 190, y);
-          
-          y += 10;
-          pdf.text('Base Price', 20, y);
-          pdf.text('-', 100, y);
-          pdf.text(`$${prices.base.toLocaleString()}`, 150, y);
-          
-          y += 10;
-          pdf.text('Computers', 20, y);
-          pdf.text(prices.computers.count.toString(), 100, y);
-          pdf.text(prices.computers.cost === 0 ? 'Included' : `$${prices.computers.cost.toLocaleString()}`, 150, y);
-          
-          y += 10;
-          pdf.text('Servers', 20, y);
-          pdf.text(prices.servers.count.toString(), 100, y);
-          pdf.text(prices.servers.cost === 0 ? 'Included' : `$${prices.servers.cost.toLocaleString()}`, 150, y);
-          
-          y += 10;
-          pdf.text('Locations', 20, y);
-          pdf.text(prices.locations.count.toString(), 100, y);
-          pdf.text(prices.locations.cost === 0 ? 'Included' : `$${prices.locations.cost.toLocaleString()}`, 150, y);
-          
-          y += 20;
-          pdf.setFontSize(14);
-          pdf.text(`Total Monthly Cost: $${prices.total.toLocaleString()}`, 20, y);
-          
-          pdf.save('Empower_Legal_Estimate.pdf');
-      });
-  }
-
-  initializeApp();
-   
-    // Initialize the application when the DOM is ready
-    document.addEventListener('DOMContentLoaded', initializeApp);
-
-    // Check for system dark mode preference
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.classList.add('dark');
-    }
-</script>
+      // Start the application
+      initializeApp();
+  </script>
 </body>
 </html>
