@@ -278,21 +278,21 @@
               if (prices.computers.cost > 0) {
                   y += 10;
                   pdf.text('Additional Computers', 20, y);
-                  pdf.text(prices.computers.count.toString(), 100, y);
+                  pdf.text((prices.computers.count - 10).toString(), 100, y);
                   pdf.text(`$${prices.computers.cost.toLocaleString()}`, 150, y);
               }
               
               if (prices.servers.cost > 0) {
                   y += 10;
                   pdf.text('Additional Servers', 20, y);
-                  pdf.text(prices.servers.count.toString(), 100, y);
+                  pdf.text((prices.servers.count - 1).toString(), 100, y);
                   pdf.text(`$${prices.servers.cost.toLocaleString()}`, 150, y);
               }
               
               if (prices.locations.cost > 0) {
                   y += 10;
                   pdf.text('Additional Locations', 20, y);
-                  pdf.text(prices.locations.count.toString(), 100, y);
+                  pdf.text((prices.locations.count - 1).toString(), 100, y);
                   pdf.text(`$${prices.locations.cost.toLocaleString()}`, 150, y);
               }
               
@@ -309,6 +309,7 @@
               y += 30;
               pdf.setFontSize(10);
               pdf.setFont(undefined, 'normal');
+              pdf.text('Base Price includes up to 10 computers, 1 server, and 1 location.', 20, y);
               pdf.text('This is an estimate, not a quote. Prices are subject to change without notice.', 20, y);
               y += 10;
               
