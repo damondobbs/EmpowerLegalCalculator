@@ -34,6 +34,7 @@
         }
     }
 </style>
+<script src="https://statics.teams.cdn.office.net/sdk/v1.11.0/js/MicrosoftTeams.min.js"></script>
 </head>
 
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex items-center justify-center relative overflow-x-hidden">
@@ -105,6 +106,20 @@
 </div>
 
 <script>
+    // Initialize Microsoft Teams
+if (typeof microsoftTeams !== 'undefined') {
+    microsoftTeams.initialize();
+    
+    // Handle Teams theme
+    microsoftTeams.getContext((context) => {
+        if (context.theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    });
+}
+
     const CONFIG = {
         PRICING: {
           EmpowerLegal: {
