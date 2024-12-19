@@ -337,7 +337,7 @@ async function generatePDF(prices) {
           
           // Event Listeners
           elements.form.addEventListener('input', (event) => {
-              if (['product', 'region', 'computers', 'servers', 'locations'].includes(event.target.id)) {
+              if (['product', 'computers', 'servers', 'locations'].includes(event.target.id)) {
                   handleCalculation();
               }
           });
